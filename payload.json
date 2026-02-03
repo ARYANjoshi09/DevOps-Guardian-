@@ -1,0 +1,8 @@
+{
+  "repository": {
+    "full_name": "test/repo"
+  },
+  "sender": {
+    "login": "test-user"
+  }
+}

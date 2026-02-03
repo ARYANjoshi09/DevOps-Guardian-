@@ -7,6 +7,14 @@
     "build": "tsc"
   },
   "dependencies": {
+    "@aws-sdk/client-cloudwatch-logs": "^3.980.0",
+    "@aws-sdk/client-secrets-manager": "^3.980.0",
+    "@e2b/code-interpreter": "^2.3.3",
+    "@google/genai": "^1.38.0",
+    "@octokit/rest": "^22.0.1",
+    "@prisma/client": "^6.19.2",
+    "@slack/web-api": "^7.13.0",
+    "prisma": "^6.19.2",
     "zod": "^3.22.4"
   },
   "devDependencies": {

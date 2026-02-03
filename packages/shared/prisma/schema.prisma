@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  directUrl  = env("DIRECT_URL")
+  extensions = [vector]
+}
+
+
+enum Severity {
+  INFO
+  WARNING
+  CRITICAL
+}
+
+enum AgentStatus {
+  IDLE
+  WORKING
+  COMPLETED
+  FAILED
+  WAITING_FOR_USER
+}
+
+model Incident {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  source      String
+  severity    Severity
+  status      String   @default("OPEN") // OPEN, RESOLVED, CLOSED
+  
+  // Deduplication
+  fingerprint     String?  // MD5 hash of error + project
+  occurrenceCount Int      @default(1)
+  lastSeen        DateTime @default(now())
+  
+  metadata    Json?    // Stores raw logs, repo info, etc.
+  
+  // Agent Workflow State
+  agentRuns   AgentRun[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AgentRun {
+  id          String      @id @default(uuid())
+  incidentId  String
+  incident    Incident    @relation(fields: [incidentId], references: [id])
+  
+  agentName   String      // "RCA", "Patch", "Verify"
+  status      AgentStatus
+  
+  // Thought Signature (The "Brain" Logs)
+  thoughts    String?     // "I tried X because Y..."
+  output      Json?       // The result (diff, rca analysis, etc.)
+  
+  startedAt   DateTime    @default(now())
+  completedAt DateTime?
+}
+
+model Memory {
+  id          String                 @id @default(uuid())
+  content     String                 // "Fix for EADDRINUSE is to kill PID..."
+  embedding   Unsupported("vector")? // pgvector embedding
+  
+  type        String                 // "NEGATIVE", "POSITIVE"
+  tags        String[]
+  
+  createdAt   DateTime @default(now())
+}
+
+model Project {
+  id           String   @id @default(uuid())
+  name         String
+  githubRepo   String   // e.g. "facebook/react"
+  githubToken  String?  // Encrypted PAT or Installation Token
+  webhookToken String?  // Guardian webhook token for log ingestion
+  
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
