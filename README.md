@@ -6,7 +6,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Status-Beta-blue?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/AI-Gemini%202.0%20Flash-purple?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/AI-Gemini%203%20Flash%20%7C%20Pro-purple?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Stack-Next.js%20%7C%20Node.js%20%7C%20Prisma-black?style=for-the-badge" />
 </p>
 
@@ -21,8 +21,8 @@ Unlike standard monitoring tools that just _alert_ you, Guardian **fixes** the p
 ### The Autonomous Loop
 
 1.  **👁️ Monitor**: Listens to live log streams and detects anomalies or errors.
-2.  **🧠 RCA Agent**: Analyzes the stack trace and codebase to identify the root cause.
-3.  **💊 Patch Agent**: Writes a code fix (patch) for the identified issue.
+2.  **🧠 RCA Agent**: Analyzes the stack trace and codebase using **Gemini 3 Pro** reasoning.
+3.  **💊 Patch Agent**: Writes a code fix (patch) for the identified issue using **Gemini 3 Flash**.
 4.  **🧪 Verify Agent**: Spins up an isolated E2B sandbox to test the fix against the codebase.
 5.  **✅ Resolve**: Creates a Pull Request and notifies your team via Slack.
 
@@ -39,7 +39,7 @@ Unlike standard monitoring tools that just _alert_ you, Guardian **fixes** the p
 ### 🤖 Specialized AI Agents
 
 - **Pipeline Agent**: Automatically generates enterprise-grade CI/CD pipelines (Jenkins, GitHub Actions).
-- **RCA Agent**: Deep code analysis using Gemini 2.0 Flash reasoning.
+- **RCA Agent**: Deep code analysis with **Gemini 3 Multimodal Model** for visual debugging.
 - **Patch Agent**: Context-aware code generation that respects your project's style.
 - **Verifier Agent**: Runs "npm test" or custom verification scripts in a secure sandbox.
 
@@ -61,7 +61,7 @@ Unlike standard monitoring tools that just _alert_ you, Guardian **fixes** the p
 
 ```mermaid
 graph TD
-    A[Log Source\n(AWS/Datadog)] -->|Webhook| B(API Gateway)
+    A["Log Source (AWS/Datadog)"] -->|Webhook| B(API Gateway)
     B --> C{Log Ingestion}
     C -->|Detect Error| D[Orchestrator]
 
@@ -88,7 +88,7 @@ graph TD
 - **Frontend**: Next.js 14, TailwindCSS, shadcn/ui, Framer Motion
 - **Backend**: Node.js, Express, Socket.io
 - **Database**: PostgreSQL, Prisma ORM
-- **AI Core**: Google Gemini 2.0 Flash (via `@google/genai`)
+- **AI Core**: **Google Gemini 3 Family (Flash, Pro & Multimodal)**
 - **Infrastructure**: AWS SDK (Secrets Manager), E2B (Sandboxing)
 
 ---
