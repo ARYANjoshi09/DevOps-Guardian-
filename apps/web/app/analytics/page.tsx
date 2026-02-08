@@ -143,7 +143,7 @@ export default function AnalyticsPage() {
                   cx="50%"
                   cy="50%"
                   outerRadius={90}
-                  label={(entry) => `${entry.severity}: ${entry.count}`}
+                  label={(entry: any) => `${entry.severity}: ${entry.count}`}
                 >
                   {severity.map((entry, index) => (
                     <Cell
