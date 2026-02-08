@@ -44,9 +44,22 @@ export class VerificationAgent implements IAgent {
     const repo = metadata?.repo;
 
     if (!owner || !repo) {
-      console.warn("[Verify] Missing owner/repo in metadata. Skipping real sandbox.");
-      // Fallback to simulated for cases where metadata is missing
-      return this.simulatedVerification(incident);
+      const errorMsg =
+        "[Verify] CRITICAL: Missing owner/repo in metadata. Cannot verify without repository information.";
+      console.error(errorMsg);
+
+      this.socketService.emitLog(projectId, errorMsg, "ERROR", "Verify", incident.id);
+
+      this.status = AgentStatus.FAILED;
+      return {
+        success: false,
+        error:
+          "Missing required metadata: owner and repo are required for E2B sandbox verification.",
+        data: {
+          logs: [errorMsg],
+          missingFields: ["owner", "repo"],
+        },
+      };
     }
 
     const repoUrl = `https://github.com/${owner}/${repo}`;
@@ -109,22 +122,5 @@ export class VerificationAgent implements IAgent {
       this.status = AgentStatus.FAILED;
       return { success: false, error: error.message };
     }
-  }
-
-  // Fallback for when metadata is incomplete
-  private async simulatedVerification(incident: IncidentEvent): Promise<AgentResult> {
-    console.log(`[Verify] Running simulated verification (no repo metadata)...`);
-
-    // Simple pass-through for demo purposes
-    console.log(`[Verify] Simulated: Tests Passed!`);
-
-    this.status = AgentStatus.COMPLETED;
-    return {
-      success: true,
-      data: {
-        sandboxId: "simulated",
-        logs: "Simulated verification passed (no real E2B run).",
-      },
-    };
   }
 }

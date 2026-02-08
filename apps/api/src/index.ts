@@ -46,6 +46,7 @@ import { projectsRouter } from "./routes/projects";
 import { watcherRouter } from "./routes/watcher";
 import { logIngestionRouter } from "./routes/logIngestion";
 import { slackRouter } from "./routes/slack";
+import { analyticsRouter } from "./routes/analytics";
 
 app.use("/api/onboarding", onboardingRouter);
 app.use("/api/auth", authRouter);
@@ -53,6 +54,7 @@ app.use("/api/projects", projectsRouter);
 app.use("/api/watcher", watcherRouter);
 app.use("/api/v1/logs", logIngestionRouter);
 app.use("/api/slack", slackRouter);
+app.use("/api/analytics", analyticsRouter);
 
 app.get("/health", (req, res) => {
   res.json({ status: "ok", service: "DevOps Guardian API" });
