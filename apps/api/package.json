@@ -7,7 +7,7 @@
     "build": "cd ../../packages/shared && npm run build && cd ../../apps/api && tsc",
     "build:prod": "cd ../.. && npm install && npm run build --workspace=packages/shared && npm run build --workspace=apps/api",
     "prisma:generate": "cd ../../packages/shared && npx prisma generate",
-    "start": "cd ../../packages/shared && npx prisma migrate deploy && cd ../../apps/api && node dist/index.js"
+    "start": "cd ../../packages/shared && npx prisma generate && cd ../../apps/api && node dist/index.js"
   },
   "dependencies": {
     "@devops-guardian/shared": "^0.1.0",

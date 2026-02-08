@@ -239,7 +239,7 @@ export default function Dashboard() {
                   cx="50%"
                   cy="50%"
                   outerRadius={80}
-                  label={({ severity, count }) => `${severity}: ${count}`}
+                  label={(entry: any) => `${entry.severity}: ${entry.count}`}
                   labelLine={{ stroke: "#71717a" }}
                 >
                   {severity.map((entry, index) => (
