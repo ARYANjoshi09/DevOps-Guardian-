@@ -33,7 +33,7 @@ router.get("/", async (req: Request, res: Response): Promise<any> => {
     // 3. Inject Slack Configuration Status & Redact Tokens
     const secretsManager = new SecretsManagerService();
     const projectsWithStatus = await Promise.all(
-      projects.map(async (p) => {
+      projects.map(async (p: any) => {
         const slackConfig = await secretsManager.getSlackConfig(p.id);
         return {
           ...p,

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3002",
-    "build": "next build",
+    "build": "cd ../../packages/shared && npm run build && cd ../../apps/web && next build",
     "build:prod": "cd ../.. && npm install && npm run build --workspace=apps/web",
     "start": "next start",
     "lint": "next lint"

@@ -74,7 +74,7 @@ export class VerificationAgent implements IAgent {
         envs,
         metadata?.token, // Pass token for private/auth clone
         "main",
-        (log) => {
+        (log: string) => {
           // Real-time log streaming
           this.socketService.emitLog(projectId, log, "INFO", "Verify", incident.id);
         },

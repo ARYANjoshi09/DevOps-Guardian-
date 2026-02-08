@@ -19,17 +19,19 @@ analyticsRouter.get("/mttr", async (req, res) => {
     }
 
     const durations = incidents
-      .map((i) => {
+      .map((i: any) => {
         const resolvedAt = (i.metadata as any)?.resolvedAt;
         if (!resolvedAt) return null;
         const resolved = new Date(resolvedAt);
         const duration = (resolved.getTime() - i.createdAt.getTime()) / 1000; // seconds
         return duration;
       })
-      .filter((d) => d !== null);
+      .filter((d: any) => d !== null);
 
     const avgMTTR =
-      durations.length > 0 ? durations.reduce((sum, d) => sum + d!, 0) / durations.length : 0;
+      durations.length > 0
+        ? durations.reduce((sum: any, d: any) => sum + d!, 0) / durations.length
+        : 0;
 
     res.json({
       average: Math.round(avgMTTR),
@@ -50,7 +52,7 @@ analyticsRouter.get("/severity-distribution", async (req, res) => {
     });
 
     res.json({
-      distribution: distribution.map((d) => ({
+      distribution: distribution.map((d: any) => ({
         severity: d.severity,
         count: d._count,
       })),
@@ -71,7 +73,7 @@ analyticsRouter.get("/agent-performance", async (req, res) => {
 
     const performance: Record<string, { completed: number; failed: number }> = {};
 
-    agentRuns.forEach((run) => {
+    agentRuns.forEach((run: any) => {
       if (!performance[run.agentName]) {
         performance[run.agentName] = { completed: 0, failed: 0 };
       }
@@ -107,17 +109,17 @@ analyticsRouter.get("/summary", async (req, res) => {
     });
 
     const durations = incidents
-      .map((i) => {
+      .map((i: any) => {
         const resolvedAt = (i.metadata as any)?.resolvedAt;
         if (!resolvedAt) return null;
         const resolved = new Date(resolvedAt);
         return (resolved.getTime() - i.createdAt.getTime()) / 1000;
       })
-      .filter((d) => d !== null);
+      .filter((d: any) => d !== null);
 
     const avgMTTR =
       durations.length > 0
-        ? Math.round(durations.reduce((sum, d) => sum + d!, 0) / durations.length)
+        ? Math.round(durations.reduce((sum: any, d: any) => sum + d!, 0) / durations.length)
         : 0;
 
     res.json({
@@ -154,7 +156,7 @@ analyticsRouter.get("/incident-trend", async (req, res) => {
     // Group by day
     const trendMap: Record<string, { date: string; total: number; resolved: number }> = {};
 
-    incidents.forEach((incident) => {
+    incidents.forEach((incident: any) => {
       const day = incident.createdAt.toISOString().split("T")[0];
       if (!trendMap[day]) {
         trendMap[day] = { date: day, total: 0, resolved: 0 };
@@ -194,7 +196,7 @@ analyticsRouter.get("/self-healing-stats", async (req, res) => {
     let retriedSuccess = 0;
     let totalFailed = 0;
 
-    incidents.forEach((incident) => {
+    incidents.forEach((incident: any) => {
       const verifyRuns = incident.agentRuns;
       if (verifyRuns.length === 1 && verifyRuns[0].status === "COMPLETED") {
         firstPassSuccess++;
@@ -244,7 +246,7 @@ analyticsRouter.get("/recent-activity", async (req, res) => {
       },
     });
 
-    const activities = recentIncidents.map((incident) => {
+    const activities = recentIncidents.map((incident: any) => {
       const metadata = incident.metadata as any;
       return {
         id: incident.id,

@@ -77,7 +77,9 @@ export class ProductionWatcherAgent implements IAgent {
       });
 
       // Filter for errors/critical
-      const errorLogs = logs.filter((l) => l.severity === "ERROR" || l.severity === "CRITICAL");
+      const errorLogs = logs.filter(
+        (l: any) => l.severity === "ERROR" || l.severity === "CRITICAL",
+      );
 
       if (errorLogs.length === 0) {
         console.log("[Watcher] No errors detected. All clear.");
