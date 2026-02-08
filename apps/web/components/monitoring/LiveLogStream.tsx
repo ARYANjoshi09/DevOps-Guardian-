@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { API_URL } from "@/lib/config";
-import { Badge, Play, Terminal, Zap } from "lucide-react";
+import { Play, Terminal, Zap } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { socketService } from "@/lib/socket";
 
